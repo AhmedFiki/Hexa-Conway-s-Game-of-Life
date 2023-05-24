@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class Hexagon : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Cell cell=new Cell();
+    public bool cellSet = false;
+
+    private void Start()
     {
-        
+        SetState(cellSet);
+    }
+    public void SetState(bool alive)
+    {
+        if (alive)
+        {
+            SetColor(Color.white);
+        }
+        else
+        {
+            SetColor(Color.gray);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetColor(Color color)
     {
-        
+        GetComponent<SpriteRenderer>().color = color;
     }
+    public void SetCell(Cell c)
+    {
+        cellSet = true;
+        cell = new Cell(c.position);
+    }
+
 }

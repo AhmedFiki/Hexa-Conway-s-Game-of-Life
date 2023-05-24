@@ -24,8 +24,13 @@ public class Grid
             {
                 Vector2 position= new Vector2(row, col);
                 cells[row,col] = new Cell(position);
-
             }
         }
     }
+
+    public Cell GetCell(int x, int y)
+    {
+        return cells[x,y];
+    }
+
 }

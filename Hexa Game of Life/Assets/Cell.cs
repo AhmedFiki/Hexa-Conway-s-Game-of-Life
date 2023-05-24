@@ -7,11 +7,16 @@ using UnityEngine;
 public class Cell
 {
     public Vector2 position;
-    public bool state;
+    public bool alive;
 
+    public Cell()
+    {
+        alive = false;
+        position = Vector2.zero;
+    }
     public Cell(Vector2 pos)
     {
-        state = false;
+        alive = false;
         position = pos;
     }
 }

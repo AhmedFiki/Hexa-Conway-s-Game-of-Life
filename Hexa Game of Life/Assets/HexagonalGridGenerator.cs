@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class HexagonalGridGenerator : MonoBehaviour
 {
+    public static HexagonalGridGenerator Instance;
     public Vector2Int gridSize;
     public float cellSize = 1f;
     public float prefapSize = 2f;
@@ -12,20 +14,47 @@ public class HexagonalGridGenerator : MonoBehaviour
     public GameObject pointedHexagonPrefab;
 
     public Grid grid;
-
+    public List<Hexagon> hexagons = new List<Hexagon>();
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
+        InitGrid();
         if (flatTopped)
             GenerateFlatHexagonalGrid();
         else GeneratePointedHexagonalGrid();
-        grid = new Grid(gridSize);
+        //PrintGrid();
 
     }
 
+    [ContextMenu("InitGrid")]
+    public void InitGrid()
+    {
+        grid = new Grid(gridSize);
+    }
 
+    [ContextMenu("Print Grid")]
+    public void PrintGrid()
+    {
+        for (int row = 0; row < gridSize.x; row++)
+        {
+            for (int col = 0; col < gridSize.y; col++)
+            {
+                Cell cell = grid.GetCell(row, col);
+
+                Debug.Log(cell.position);
+            }
+        }
+    }
+
+    [ContextMenu("GeneratePointedHexagonalGrid")]
     private void GeneratePointedHexagonalGrid()
     {
+        ClearGrid();
+        InitGrid();
 
 
         float yOffset = cellSize * 0.75f;
@@ -45,13 +74,21 @@ public class HexagonalGridGenerator : MonoBehaviour
 
                 hexagon.transform.localScale = new Vector3(prefapSize, prefapSize, prefapSize);
                 hexagon.transform.SetParent(transform);
+                hexagon.GetComponent<Hexagon>().SetCell(grid.GetCell(col, row));
+                hexagons.Add(hexagon.GetComponent<Hexagon>());
+
             }
 
 
         }
     }
+
+    [ContextMenu("GenerateFlatHexagonalGrid")]
     private void GenerateFlatHexagonalGrid()
     {
+        ClearGrid();
+        InitGrid();
+
         float xOffset = cellSize * 0.75f;
         float yOffset = cellSize * Mathf.Sqrt(3f) / 2f;
 
@@ -70,10 +107,23 @@ public class HexagonalGridGenerator : MonoBehaviour
                 GameObject hexagon = Instantiate(flatHexagonPrefab, position, Quaternion.identity);
                 hexagon.transform.localScale = new Vector3(prefapSize, prefapSize, prefapSize);
                 hexagon.transform.SetParent(transform);
+                hexagon.GetComponent<Hexagon>().SetCell(grid.GetCell(col, row));
+                hexagons.Add(hexagon.GetComponent<Hexagon>());
             }
         }
     }
 
+    [ContextMenu("ClearGrid")]
+    public void ClearGrid()
+    {
+        hexagons.Clear();
+        int childCount = transform.childCount;
+        for (int i = childCount - 1; i >= 0; i--)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            Destroy(child);
+        }
+    }
 }
 
 
