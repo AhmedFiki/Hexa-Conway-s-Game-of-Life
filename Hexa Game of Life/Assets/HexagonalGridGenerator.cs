@@ -15,6 +15,7 @@ public class HexagonalGridGenerator : MonoBehaviour
 
     public Grid grid;
     public List<Hexagon> hexagons = new List<Hexagon>();
+
     private void Awake()
     {
         Instance = this;

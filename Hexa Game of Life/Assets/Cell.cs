@@ -7,7 +7,7 @@ using UnityEngine;
 public class Cell
 {
     public Vector2 position;
-    public bool alive;
+    public bool alive=false;
 
     public Cell()
     {
