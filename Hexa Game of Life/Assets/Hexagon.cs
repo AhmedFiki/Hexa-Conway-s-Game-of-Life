@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Hexagon : MonoBehaviour
 {
-    public Cell cell=new Cell();
+    public Cell cell = new Cell();
     public bool cellSet = false;
     public bool nextAlive = false;
 
@@ -13,14 +13,14 @@ public class Hexagon : MonoBehaviour
     {
         SetState(false);
     }
-
+    public Vector2 GetPosition() { return cell.position; }
     public void SetState(bool alive)
     {
         if (alive)
         {
             SetColor(Color.white);
             cell.alive = true;
-            
+
         }
         else
         {
@@ -32,7 +32,7 @@ public class Hexagon : MonoBehaviour
 
     public void ToggleState()
     {
-        if(cell.alive)
+        if (cell.alive)
         {
             SetState(false);
         }
@@ -44,7 +44,7 @@ public class Hexagon : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log(cell.position);
+        //Debug.Log(cell.position);
         SetState(true);
     }
 
@@ -58,12 +58,13 @@ public class Hexagon : MonoBehaviour
         cellSet = true;
         cell = new Cell(c.position);
     }
-    public bool IsAlive(Vector2 pos)
+    public bool IsAlive()
     {
         return cell.alive;
     }
     public void UpdateAlive()
     {
-        SetState(nextAlive);
+        if (nextAlive != cell.alive)
+            SetState(nextAlive);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HexagonsManager : MonoBehaviour
 {
-    public List<Hexagon> hexagons = new List<Hexagon>();
+    public Hexagon[,] hexagons;
 
     private void Start()
     {
@@ -42,8 +42,9 @@ public class HexagonsManager : MonoBehaviour
                 //die
                 i.nextAlive=false;
             }
+
         }
-        UpdateColors();
+        //UpdateColors();
 
         foreach (Hexagon i in hexagons)
         {
@@ -64,20 +65,21 @@ public class HexagonsManager : MonoBehaviour
             }
 
         }
-
-       if(count>0) Debug.Log(count);
         return count;
     }
     public bool IsAlive(Vector2 v)
     {
-        foreach ( Hexagon hexagon in hexagons)
+
+        /*foreach ( Hexagon hexagon in hexagons)
         {
             if(hexagon.cell.position==v)
             return hexagon.IsAlive(v);
 
-        }
-
-        return false;
+        }*/
+        Debug.Log(v.x+" "+v.y);
+        Debug.Log(hexagons.Length);
+        Debug.Log(hexagons[(int)v.x, (int)v.y]);
+        return hexagons[(int)v.x, (int)v.y].IsAlive();
     }
 
     [ContextMenu("UpdateColors")]
@@ -88,10 +90,7 @@ public class HexagonsManager : MonoBehaviour
             hexagon.SetState(false);
         }
     }
-    public Hexagon HexagonAt(Vector2 position)
-    {
-        return hexagons[(int)position.x * (int)position.y];
-    }
+
     public List<Vector2> GetNeighbors(Hexagon hexagon)
     {
 
@@ -103,8 +102,9 @@ public class HexagonsManager : MonoBehaviour
             foreach (Vector2Int offset in NeighborOffsetsEven)
             {
                 Vector2 neighborPosition = hexagon.cell.position + offset;
+                if (neighborPosition.x < 0 || neighborPosition.y < 0 || neighborPosition.x> hexagons.GetLength(0)-1 || neighborPosition.y > hexagons.GetLength(1)-1) continue;
                 neighbors.Add(neighborPosition);
-                //Debug.Log(neighborPosition);
+                Debug.Log(neighborPosition);
             }
 
         }
@@ -114,8 +114,10 @@ public class HexagonsManager : MonoBehaviour
             foreach (Vector2Int offset in NeighborOffsetsOdd)
             {
                 Vector2 neighborPosition = hexagon.cell.position + offset;
+                if (neighborPosition.x < 0 || neighborPosition.y < 0 || neighborPosition.x > hexagons.GetLength(0) - 1 || neighborPosition.y > hexagons.GetLength(1) - 1) continue;
+
                 neighbors.Add(neighborPosition);
-                //Debug.Log(neighborPosition);
+                Debug.Log(neighborPosition);
             }
 
         }
