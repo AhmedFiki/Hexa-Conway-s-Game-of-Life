@@ -14,8 +14,7 @@ public class HexagonalGridGenerator : MonoBehaviour
     public GameObject pointedHexagonPrefab;
 
     public Grid grid;
-    public Hexagon[,] hexagons;
-
+    public List<Hexagon> hexagons = new List<Hexagon>();
     private void Awake()
     {
         Instance = this;
@@ -35,7 +34,6 @@ public class HexagonalGridGenerator : MonoBehaviour
     public void InitGrid()
     {
         grid = new Grid(gridSize);
-        hexagons = new Hexagon[gridSize.x,gridSize.y];
     }
 
     [ContextMenu("Print Grid")]
@@ -77,8 +75,7 @@ public class HexagonalGridGenerator : MonoBehaviour
                 hexagon.transform.localScale = new Vector3(prefapSize, prefapSize, prefapSize);
                 hexagon.transform.SetParent(transform);
                 hexagon.GetComponent<Hexagon>().SetCell(grid.GetCell(col, row));
-                hexagons[row,col]= hexagon.GetComponent<Hexagon>();
-
+                hexagons.Add(hexagon.GetComponent<Hexagon>());
             }
 
 
@@ -110,7 +107,7 @@ public class HexagonalGridGenerator : MonoBehaviour
                 hexagon.transform.localScale = new Vector3(prefapSize, prefapSize, prefapSize);
                 hexagon.transform.SetParent(transform);
                 hexagon.GetComponent<Hexagon>().SetCell(grid.GetCell(col, row));
-                hexagons[row, col] = hexagon.GetComponent<Hexagon>();
+                hexagons.Add(hexagon.GetComponent<Hexagon>());
             }
         }
     }
@@ -118,6 +115,7 @@ public class HexagonalGridGenerator : MonoBehaviour
     [ContextMenu("ClearGrid")]
     public void ClearGrid()
     {
+        hexagons.Clear();
         int childCount = transform.childCount;
         for (int i = childCount - 1; i >= 0; i--)
         {

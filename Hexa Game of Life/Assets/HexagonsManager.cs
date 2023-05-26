@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HexagonsManager : MonoBehaviour
 {
-    public Hexagon[,] hexagons;
+    public List<Hexagon> hexagons = new List<Hexagon>();
 
     private void Start()
     {
@@ -26,7 +26,7 @@ public class HexagonsManager : MonoBehaviour
         {
 
             List<Vector2> neighbors = GetNeighbors(i);
-            //RULES... WITHOUT THEM WE LIVE WITH THE ANIMALS
+
             //Each cell with one or no neighbors dies from isolation.
             //Each cell with three or more neighbors dies from overpopulation.
             //Only the cells with two neighbors survives.
@@ -70,16 +70,15 @@ public class HexagonsManager : MonoBehaviour
     public bool IsAlive(Vector2 v)
     {
 
-        /*foreach ( Hexagon hexagon in hexagons)
+        foreach ( Hexagon hexagon in hexagons)
         {
             if(hexagon.cell.position==v)
-            return hexagon.IsAlive(v);
 
-        }*/
-        Debug.Log(v.x+" "+v.y);
-        Debug.Log(hexagons.Length);
-        Debug.Log(hexagons[(int)v.x, (int)v.y]);
-        return hexagons[(int)v.x, (int)v.y].IsAlive();
+            return hexagon.IsAlive();
+
+        }
+       
+        return false;
     }
 
     [ContextMenu("UpdateColors")]
@@ -102,9 +101,8 @@ public class HexagonsManager : MonoBehaviour
             foreach (Vector2Int offset in NeighborOffsetsEven)
             {
                 Vector2 neighborPosition = hexagon.cell.position + offset;
-                if (neighborPosition.x < 0 || neighborPosition.y < 0 || neighborPosition.x> hexagons.GetLength(0)-1 || neighborPosition.y > hexagons.GetLength(1)-1) continue;
                 neighbors.Add(neighborPosition);
-                Debug.Log(neighborPosition);
+                //Debug.Log(neighborPosition);
             }
 
         }
@@ -114,10 +112,9 @@ public class HexagonsManager : MonoBehaviour
             foreach (Vector2Int offset in NeighborOffsetsOdd)
             {
                 Vector2 neighborPosition = hexagon.cell.position + offset;
-                if (neighborPosition.x < 0 || neighborPosition.y < 0 || neighborPosition.x > hexagons.GetLength(0) - 1 || neighborPosition.y > hexagons.GetLength(1) - 1) continue;
 
                 neighbors.Add(neighborPosition);
-                Debug.Log(neighborPosition);
+                //Debug.Log(neighborPosition);
             }
 
         }
