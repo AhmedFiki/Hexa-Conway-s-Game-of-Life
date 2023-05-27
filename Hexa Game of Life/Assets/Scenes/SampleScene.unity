@@ -317,7 +317,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1034,6 +1034,7 @@ MonoBehaviour:
   flatTopped: 0
   flatHexagonPrefab: {fileID: 3543575815118971237, guid: 605a2bba9643eda4e8c279c4184a7e9d, type: 3}
   pointedHexagonPrefab: {fileID: 6193508789017373937, guid: 9445beffc9c815e4891211ce4d10ec64, type: 3}
+  hexagons: []
 --- !u!4 &2058299072
 Transform:
   m_ObjectHideFlags: 0
@@ -1061,6 +1062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd0d47e39fceee46a2d1880ed9ec2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hexagons: []
 --- !u!114 &2058299074
 MonoBehaviour:
   m_ObjectHideFlags: 0
